@@ -103,7 +103,7 @@
 # if __name__ == "__main__":
 #     app.run(debug=True)
 
-import openai
+from openai import OpenAI
 import os
 from flask import Flask, request, render_template, render_template_string
 from dotenv import load_dotenv
@@ -114,10 +114,10 @@ import json
 load_dotenv()
 
 # OpenAI API 키 설정
-openai.api_key = os.getenv('OPENAI_API_KEY')
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
 
 app = Flask(__name__)
-client = openai
+client = OpenAI()
 
 def get_dream_story_and_interpretation(dream_text):
     response_story = client.chat.completions.create(
