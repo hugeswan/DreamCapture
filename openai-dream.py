@@ -109,6 +109,7 @@ from flask import Flask, request, render_template, render_template_string, rende
 from dotenv import load_dotenv
 import subprocess
 import json
+from datetime import datetime
 
 # .env 파일에서 환경 변수 불러오기
 load_dotenv()
@@ -175,6 +176,8 @@ def home():
         dream_text = request.form['dream']
         story, interpretation = get_dream_story_and_interpretation(dream_text)
         image_url = generate_dream_image(dream_text)
+        # 현재 날짜와 시간 가져오기
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         # 결과를 정적 HTML 파일로 저장
         with open('templates/result.html', 'w', encoding='utf-8') as f:
             f.write(render_template('result_template.html', story=story, interpretation=interpretation, image_url=image_url))

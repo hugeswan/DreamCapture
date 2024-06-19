@@ -8,9 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4 text-center">Dream Story</h1>
+        <h1 class="my-4 text-center">Dream Analysis</h1>
+        <p class="text-center"><strong>Date and Time:</strong> {{ current_time }}</p>
+        <h2 class="my-4 text-center">Dream Story</h2>
         <p class="lead">{{ story }}</p>
-        <h1 class="my-4 text-center">Dream Interpretation</h1>
+        <h2 class="my-4 text-center">Dream Interpretation</h2>
         <p class="lead">{{ interpretation }}</p>
         {% if image_url %}
         <h2 class="my-4 text-center">Generated Image</h2>
