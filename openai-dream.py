@@ -134,7 +134,7 @@ def get_dream_story_and_interpretation(dream_text):
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"다음 꿈에 무슨 의미가 담겨있는지, 내가 무슨 감정을 느끼고 어떤 상태인지 한 문단으로 존댓말로 해석해줘: {dream_text}"}
+            {"role": "user", "content": f"다음 꿈에 무슨 의미가 담겨있는지, 내가 무슨 감정을 느끼고 어떤 상태인지 논리적이고 공식적인 말투로 한 문단으로 해석해줘: {dream_text}"}
         ]
     )
     interpretation = response_interpretation.choices[0].message.content
