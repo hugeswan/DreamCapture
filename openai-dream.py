@@ -120,23 +120,23 @@ app = Flask(__name__)
 client = openai
 
 def get_dream_story_and_interpretation(dream_text):
-    response_story = client.ChatCompletion.create(
+    response_story = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": f"다음 꿈의 스토리가 짧고 부족한데, 좀 더 풍부하면서도 오리지널에서 벗어나지 않게 한 문단으로 반말로 작성해줘: {dream_text}"}
         ]
     )
-    story = response_story.choices[0].message['content']
+    story = response_story.choices[0].message.content
 
-    response_interpretation = client.ChatCompletion.create(
+    response_interpretation = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": f"다음 꿈에 무슨 의미가 담겨있는지, 내가 무슨 감정을 느끼고 어떤 상태인지 한 문단으로 존댓말로 해석해줘: {dream_text}"}
         ]
     )
-    interpretation = response_interpretation.choices[0].message['content']
+    interpretation = response_interpretation.choices[0].message.content
 
     return story, interpretation
 
@@ -199,4 +199,4 @@ def home():
     ''')
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
