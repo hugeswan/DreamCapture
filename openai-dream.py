@@ -80,9 +80,7 @@ def home():
         dream_text = request.form['dream']
         story, interpretation = get_dream_story_and_interpretation(dream_text)
         image_url = generate_dream_image(dream_text)
-        # 결과를 정적 HTML 파일로 저장
-        with open('templates/result.html', 'w', encoding='utf-8') as f:
-            f.write(render_template('result.html', story=story, interpretation=interpretation, image_url=image_url))
+        return render_template('result.html', story=story, interpretation=interpretation, image_url=image_url)
 
     return render_template_string('''
         <!doctype html>
@@ -98,17 +96,9 @@ def home():
                 <textarea name=dream rows=10 cols=30></textarea><br><br>
                 <input type=submit value=Analyze>
             </form>
-            <h2>Dream Story</h2>
-            <p>{{ story }}</p>
-            <h2>Dream Interpretation</h2>
-            <p>{{ interpretation }}</p>
-            {% if image_url %}
-            <h2>Generated Image</h2>
-            <img src="{{ image_url }}" alt="Generated Dream Image">
-            {% endif %}
         </body>
         </html>
-    ''', story=story, interpretation=interpretation, image_url=image_url)
+    ''')
 
 if __name__ == "__main__":
     app.run(debug=True)
