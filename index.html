@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dream Analysis</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Enter your dream</h1>
-    <form action="/result" method="post">
-        <textarea name="dream" rows="10" cols="30"></textarea><br><br>
-        <input type="submit" value="Analyze">
-    </form>
+    <div class="container">
+        <h1 class="my-4 text-center">Enter your dream</h1>
+        <form action="/result" method="post">
+            <div class="form-group">
+                <textarea name="dream" rows="10" class="form-control" placeholder="Describe your dream..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Analyze</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

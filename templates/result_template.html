@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dream Analysis</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Dream Story</h1>
-    <p>{{ story }}</p>
-    <h1>Dream Interpretation</h1>
-    <p>{{ interpretation }}</p>
-    {% if image_url %}
-    <h2>Generated Image</h2>
-    <img src="{{ image_url }}" alt="Generated Dream Image">
-    {% endif %}
+    <div class="container">
+        <h1 class="my-4 text-center">Dream Story</h1>
+        <p class="lead">{{ story }}</p>
+        <h1 class="my-4 text-center">Dream Interpretation</h1>
+        <p class="lead">{{ interpretation }}</p>
+        {% if image_url %}
+        <h2 class="my-4 text-center">Generated Image</h2>
+        <img src="{{ image_url }}" alt="Generated Dream Image" class="img-fluid">
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
