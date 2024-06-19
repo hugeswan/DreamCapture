@@ -5,7 +5,7 @@ import os
 import subprocess
 import json
 
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template_string, render_template
 from dotenv import load_dotenv
 
 # .env 파일에서 환경 변수 불러오기
