@@ -177,7 +177,7 @@ def home():
         story, interpretation = get_dream_story_and_interpretation(dream_text)
         image_url = generate_dream_image(dream_text)
         # 현재 날짜와 시간 가져오기
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
         # 결과를 정적 HTML 파일로 저장
         with open('templates/result.html', 'w', encoding='utf-8') as f:
             f.write(render_template('result_template.html', story=story, interpretation=interpretation, image_url=image_url))
@@ -202,4 +202,5 @@ def home():
     ''')
 
 if __name__ == "__main__":
+    current_time = datetime.now().strftime("%Y/%m/%d %H:%M")
     app.run(debug=True, host='0.0.0.0', port=5001)
