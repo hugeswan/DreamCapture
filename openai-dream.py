@@ -105,7 +105,7 @@
 
 import openai
 import os
-from flask import Flask, request, render_template_string, render_template
+from flask import Flask, request, render_template, render_template_string
 from dotenv import load_dotenv
 import subprocess
 import json
@@ -199,4 +199,4 @@ def home():
     ''')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
