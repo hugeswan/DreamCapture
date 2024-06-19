@@ -4,23 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dream Analysis</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 800px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4 text-center">Dream Analysis</h1>
-        <p class="text-center"><strong>Date and Time:</strong> {{ current_time }}</p>
-        <h2 class="my-4 text-center">Dream Story</h2>
-        <p class="lead">{{ story }}</p>
-        <h2 class="my-4 text-center">Dream Interpretation</h2>
-        <p class="lead">{{ interpretation }}</p>
-        {% if image_url %}
-        <h2 class="my-4 text-center">Generated Image</h2>
-        <img src="{{ image_url }}" alt="Generated Dream Image" class="img-fluid">
-        {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center">Dream Analysis</h1>
+                <p class="text-center"><strong>Date and Time:</strong> {{ current_time }}</p>
+                <h2>Dream Story</h2>
+                <p>{{ story }}</p>
+                <h2>Dream Interpretation</h2>
+                <p>{{ interpretation }}</p>
+                {% if image_url %}
+                <h2>Generated Image</h2>
+                <img src="{{ image_url }}" alt="Generated Dream Image" class="img-fluid">
+                {% endif %}
+            </div>
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
