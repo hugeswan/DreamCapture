@@ -284,7 +284,7 @@ def generate_dream_image(dream_text):
 def transcribe_audio(audio_file_path):
     # Whisper API를 사용하여 음성 파일을 텍스트로 변환합니다.
     audio_file = open(audio_file_path, "rb")
-    response = client.audio.transcriptions.create("whisper-1", file=audio_file)
+    response = client.audio.transcriptions(model="whisper-1", file=audio_file)
     return response['text']
 
 @app.route('/', methods=['GET', 'POST'])
