@@ -105,7 +105,7 @@
 
 from openai import OpenAI
 import os
-from flask import Flask, request, render_template, render_template_string
+from flask import Flask, request, render_template, render_template_string, result_template
 from dotenv import load_dotenv
 import subprocess
 import json
