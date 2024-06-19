@@ -105,7 +105,7 @@
 
 import openai
 import os
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template_string, render_template
 from dotenv import load_dotenv
 import subprocess
 import json
@@ -169,19 +169,34 @@ def generate_dream_image(dream_text):
 
     return image_url
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    if request.method == 'POST':
+        dream_text = request.form['dream']
+        story, interpretation = get_dream_story_and_interpretation(dream_text)
+        image_url = generate_dream_image(dream_text)
+        # 결과를 정적 HTML 파일로 저장
+        with open('result.html', 'w', encoding='utf-8') as f:
+            f.write(render_template('result_template.html', story=story, interpretation=interpretation, image_url=image_url))
+        return render_template('result_template.html', story=story, interpretation=interpretation, image_url=image_url)
 
-@app.route('/result', methods=['POST'])
-def result():
-    dream_text = request.form['dream']
-    story, interpretation = get_dream_story_and_interpretation(dream_text)
-    image_url = generate_dream_image(dream_text)
-    # 결과를 정적 HTML 파일로 저장
-    with open('result.html', 'w', encoding='utf-8') as f:
-        f.write(render_template('result_template.html', story=story, interpretation=interpretation, image_url=image_url))
-    return render_template('result_template.html', story=story, interpretation=interpretation, image_url=image_url)
+    return render_template_string('''
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Dream Analysis</title>
+        </head>
+        <body>
+            <h1>Enter your dream</h1>
+            <form method=post>
+                <textarea name=dream rows=10 cols=30></textarea><br><br>
+                <input type=submit value=Analyze>
+            </form>
+        </body>
+        </html>
+    ''')
 
 if __name__ == "__main__":
     app.run(debug=True)
