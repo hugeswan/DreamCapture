@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Analysis</title>
+</head>
+<body>
+    <h1>Dream Story</h1>
+    <p>{{ story }}</p>
+    <h1>Dream Interpretation</h1>
+    <p>{{ interpretation }}</p>
+    {% if image_url %}
+    <h2>Generated Image</h2>
+    <img src="{{ image_url }}" alt="Generated Dream Image">
+    {% endif %}
+</body>
+</html>
