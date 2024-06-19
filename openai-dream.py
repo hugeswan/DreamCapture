@@ -1,9 +1,19 @@
-from openai import OpenAI
-client = OpenAI()
+# from openai import OpenAI
+import openai
 
 import os
 import subprocess
 import json
+
+from flask import Flask, request, render_template_string
+from dotenv import load_dotenv
+
+# .env 파일에서 환경 변수 불러오기
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_API_KEY')
+app = Flask(__name__)
+# client = OpenAI()
+client = openai
 
 def get_dream_story_and_interpretation(dream_text):
     # 꿈을 스토리로 작성
@@ -23,69 +33,82 @@ def get_dream_story_and_interpretation(dream_text):
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"다음 꿈의 의미를 뻔하지 않고 재미있게 한 문단으로 존댓말로 해석해줘: {dream_text}"}
+            {"role": "user", "content": f"다음 꿈에 무슨 의미가 담겨있는지, 내가 무슨 감정을 느끼고 어떤 상태인지 한 문단으로 존댓말로 해석해줘: {dream_text}"}
         ]
     )
     interpretation = response_interpretation.choices[0].message.content
 
     return story, interpretation
 
+def generate_dream_image(dream_text):
+    api_key = os.getenv('OPENAI_API_KEY')
+    
+    # JSON data for the API request
+    data = json.dumps({
+        "model": "dall-e-3",
+        "prompt": dream_text,
+        "n": 1,
+        "size": "1024x1024",
+        "response_format": "url"
+    })
+
+    # Constructing the cURL command for the API request
+    curl_command = [
+        "curl", "-X", "POST", "https://api.openai.com/v1/images/generations",
+        "-H", "Content-Type: application/json",
+        "-H", f"Authorization: Bearer {api_key}",
+        "-d", data
+    ]
+
+    try:
+        response = subprocess.run(curl_command, capture_output=True, text=True, check=True)
+        response_json = json.loads(response.stdout)
+        image_url = response_json['data'][0]['url']
+    except subprocess.CalledProcessError as e:
+        print("Error occurred:")
+        print(e.stderr)
+        image_url = None
+
+    return image_url
+
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    story = ""
+    interpretation = ""
+    image_url = ""
+    if request.method == 'POST':
+        dream_text = request.form['dream']
+        story, interpretation = get_dream_story_and_interpretation(dream_text)
+        image_url = generate_dream_image(dream_text)
+        # 결과를 정적 HTML 파일로 저장
+        with open('templates/result.html', 'w', encoding='utf-8') as f:
+            f.write(render_template('result.html', story=story, interpretation=interpretation, image_url=image_url))
+
+    return render_template_string('''
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Dream Analysis</title>
+        </head>
+        <body>
+            <h1>Enter your dream</h1>
+            <form method=post>
+                <textarea name=dream rows=10 cols=30></textarea><br><br>
+                <input type=submit value=Analyze>
+            </form>
+            <h2>Dream Story</h2>
+            <p>{{ story }}</p>
+            <h2>Dream Interpretation</h2>
+            <p>{{ interpretation }}</p>
+            {% if image_url %}
+            <h2>Generated Image</h2>
+            <img src="{{ image_url }}" alt="Generated Dream Image">
+            {% endif %}
+        </body>
+        </html>
+    ''', story=story, interpretation=interpretation, image_url=image_url)
+
 if __name__ == "__main__":
-    dream_text = input("꿈 내용을 입력하세요: ")
-
-    story, interpretation = get_dream_story_and_interpretation(dream_text)
-
-    print("\n--- 꿈 이야기 ---")
-    print(story)
-    print("\n--- 꿈 풀이 ---")
-    print(interpretation)
-
-def get_user_input(prompt):
-    """ Function to get user input """
-    return input(prompt)
-
-def main():
-    # Fetch the API key from the system environment
-    api_key = os.environ.get('OPENAI_API_KEY')
-
-    if not api_key:
-        print("API key not found in environment. Please set OPENAI_API_KEY.")
-        return
-
-    while True:
-        print(f"Authorization Header: Bearer {api_key}")
-        print(f"Prompt: {dream_text}")
-
-        # JSON data for the API request
-        data = json.dumps({
-            "model": "dall-e-3",          # Specifies the model to be used
-            "prompt": dream_text,        # The user-provided prompt
-            "n": 1,                       # Number of images to generate
-            "size": "1024x1024",          # Size of the generated images
-            "quality": "hd",              # Optional: double cost for finer details & greater consistency
-            "response_format": "url"      # Optional: url is default but b64_json is another option
-        })
-
-        # Constructing the cURL command for the API request
-        curl_command = [
-            "curl", "-X", "POST", "https://api.openai.com/v1/images/generations",
-            "-H", "Content-Type: application/json",
-            "-H", f"Authorization: Bearer {api_key}",
-            "-d", data
-        ]
-
-        # Print the command for validation/debugging
-        print("cURL Command:", " ".join(curl_command))
-        
-        # Executing the cURL command and capturing the response
-        try:
-            response = subprocess.run(curl_command, capture_output=True, text=True, check=True)
-            print("Response:\n", response.stdout)
-        except subprocess.CalledProcessError as e:
-            # Handling errors during the API request
-            print("Error occurred:")
-            print(e.stderr)
-        break
-
-if __name__ == "__main__":
-    main()
+    app.run(debug=True)
