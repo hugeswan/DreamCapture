@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,6 +50,95 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> -->
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Analysis</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+        }
+        textarea {
+            resize: none;
+            height: 200px;
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 class="text-center">Enter your dream</h1>
+            <div class="text-center">
+                <button class="btn btn-secondary" onclick="showTextInput()">Text Input</button>
+                <button class="btn btn-secondary" onclick="showVoiceInput()">Voice Input</button>
+            </div>
+            <form id="textForm" action="/" method="post" enctype="multipart/form-data" style="display: none;">
+                <div class="form-group">
+                    <label for="dream">Describe your dream</label>
+                    <textarea name="dream" id="dream" class="form-control" placeholder="Describe your dream..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Analyze</button>
+            </form>
+            <form id="voiceForm" action="/voice_input" method="post" enctype="multipart/form-data" style="display: none;">
+                <div class="form-group">
+                    <label for="voice">Record your dream</label>
+                    <input type="file" name="voice" id="voice" class="form-control" accept="audio/*" capture>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Analyze</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function showTextInput() {
+            document.getElementById('textForm').style.display = 'block';
+            document.getElementById('voiceForm').style.display = 'none';
+        }
+        function showVoiceInput() {
+            document.getElementById('textForm').style.display = 'none';
+            document.getElementById('voiceForm').style.display = 'block';
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
