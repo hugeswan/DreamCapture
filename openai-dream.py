@@ -236,7 +236,7 @@ def get_dream_story_and_interpretation(dream_text):
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"다음 꿈의 스토리가 짧고 부족한데, 좀 더 풍부하면서도 오리지널에서 벗어나지 않게 한 문단으로 반말로 작성해줘: {dream_text}"}
+            {"role": "user", "content": f"My next dream story is short and lacking, I need you to make it a little richer but still original in one paragraph.: {dream_text}"}
         ]
     )
     story = response_story.choices[0].message.content
@@ -245,7 +245,7 @@ def get_dream_story_and_interpretation(dream_text):
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"다음 꿈에 무슨 의미가 담겨있는지, 내가 무슨 감정을 느끼고 어떤 상태인지 논리적이고 공식적인 말투로 한 문단으로 해석해줘: {dream_text}"}
+            {"role": "user", "content": f"I want you to interpret the following dreams based on divination, analyze my mental state, and write a paragraph in a formal tone.: {dream_text}"}
         ]
     )
     interpretation = response_interpretation.choices[0].message.content
