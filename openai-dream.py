@@ -321,8 +321,8 @@ def home():
                     background: white;
                 }
                 textarea {
-                    resize: none;
-                    height: 200px;
+                    resize: vertical;
+                    height: 1000px;
                     border-radius: 5px;
                 }
                 .btn-primary {
