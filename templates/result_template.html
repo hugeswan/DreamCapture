@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dream Analysis</title>
+    <title>Dream Analysis Result</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -12,19 +12,18 @@
         }
         .container {
             margin-top: 50px;
-            max-width: 800px;
+            max-width: 600px;
         }
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .card-body {
             padding: 20px;
+            border-radius: 10px;
+            background: white;
         }
-        img {
+        .card img {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
+            border-radius: 10px;
+            margin-top: 20px;
         }
         h1, h2 {
             margin-bottom: 20px;
@@ -32,24 +31,25 @@
         }
         p {
             font-size: 18px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <div class="card-body">
-                <h1 class="text-center">Dream Analysis</h1>
-                <p class="text-center"><strong>Date and Time:</strong> {{ current_time }}</p>
-                <h2>Dream Story</h2>
-                <p>{{ story }}</p>
-                <h2>Dream Interpretation</h2>
-                <p>{{ interpretation }}</p>
-                {% if image_url %}
-                <h2>Generated Image</h2>
-                <img src="{{ image_url }}" alt="Generated Dream Image" class="img-fluid">
-                {% endif %}
-            </div>
+            <h1 class="text-center">Dream Analysis</h1>
+            <p class="text-center">Date and Time: {{ current_time }}</p>
+            <h2>Dream Story</h2>
+            <p>{{ story }}</p>
+            <h2>Dream Interpretation</h2>
+            <p>{{ interpretation }}</p>
+            {% if image_url %}
+            <h2>Generated Image</h2>
+            <img src="{{ image_url }}" alt="Generated Dream Image">
+            {% endif %}
+            <h2>QR Code</h2>
+            <img src="{{ url_for('static', filename='images/QR.png') }}" alt="QR Code">
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
